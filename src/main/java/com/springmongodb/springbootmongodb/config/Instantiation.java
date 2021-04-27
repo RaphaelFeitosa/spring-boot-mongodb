@@ -2,6 +2,7 @@ package com.springmongodb.springbootmongodb.config;
 
 import com.springmongodb.springbootmongodb.domain.Post;
 import com.springmongodb.springbootmongodb.domain.User;
+import com.springmongodb.springbootmongodb.dto.AuthorDTO;
 import com.springmongodb.springbootmongodb.repository.PostRepository;
 import com.springmongodb.springbootmongodb.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -36,12 +37,13 @@ public class Instantiation  implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
-        Post post1 = new Post(null, sdf.parse("21/03/2021"), "Partiu viagem",
-                "Vou viajar para São Paulo!", maria);
-        Post post2 = new Post(null, sdf.parse("21/03/2021"), "Bom dia",
-                "Acordei feliz hoje!", maria);
-
         this.userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
+        Post post1 = new Post(null, sdf.parse("21/03/2021"), "Partiu viagem",
+                "Vou viajar para São Paulo!", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("21/03/2021"), "Bom dia",
+                "Acordei feliz hoje!", new AuthorDTO(maria));
+
         this.postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
