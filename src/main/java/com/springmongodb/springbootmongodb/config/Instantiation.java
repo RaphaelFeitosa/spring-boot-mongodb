@@ -3,6 +3,7 @@ package com.springmongodb.springbootmongodb.config;
 import com.springmongodb.springbootmongodb.domain.Post;
 import com.springmongodb.springbootmongodb.domain.User;
 import com.springmongodb.springbootmongodb.dto.AuthorDTO;
+import com.springmongodb.springbootmongodb.dto.CommentDTO;
 import com.springmongodb.springbootmongodb.repository.PostRepository;
 import com.springmongodb.springbootmongodb.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -18,8 +19,7 @@ public class Instantiation  implements CommandLineRunner {
     private final UserRepository  userRepository;
     private final PostRepository  postRepository;
 
-
-    public Instantiation(UserRepository  userRepository, PostRepository postRepository) {
+    public Instantiation(UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
     }
@@ -43,6 +43,13 @@ public class Instantiation  implements CommandLineRunner {
                 "Vou viajar para São Paulo!", new AuthorDTO(maria));
         Post post2 = new Post(null, sdf.parse("21/03/2021"), "Bom dia",
                 "Acordei feliz hoje!", new AuthorDTO(maria));
+
+        CommentDTO c1 = new CommentDTO("Boa viagem mano", sdf.parse("21/03/2020"), new AuthorDTO(alex));
+        CommentDTO c2 = new CommentDTO("Aproveite", sdf.parse("21/03/2020"), new AuthorDTO(bob));
+        CommentDTO c3 = new CommentDTO("Tenha um ótimo dia", sdf.parse("21/03/2020"), new AuthorDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(c1, c2));
+        post2.getComments().addAll(Arrays.asList(c3));
 
         this.postRepository.saveAll(Arrays.asList(post1, post2));
 
