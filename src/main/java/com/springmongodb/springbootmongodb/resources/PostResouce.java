@@ -3,6 +3,7 @@ package com.springmongodb.springbootmongodb.resources;
 import com.springmongodb.springbootmongodb.domain.Post;
 import com.springmongodb.springbootmongodb.domain.User;
 import com.springmongodb.springbootmongodb.dto.UserDTO;
+import com.springmongodb.springbootmongodb.resources.util.URL;
 import com.springmongodb.springbootmongodb.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,14 @@ public class PostResouce {
         Post post = this.postService.findById(id);
         return ResponseEntity.ok().body(post);
     }
+
+    @RequestMapping(value = "/titlesearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text){
+        text = URL.decodeParam(text);
+        List<Post> post = this.postService.findByTitle(text);
+        return ResponseEntity.ok().body(post);
+    }
+
 
 
 
